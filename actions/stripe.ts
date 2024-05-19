@@ -9,9 +9,6 @@ import { redirect } from "next/navigation";
 import { createId } from '@paralleldrive/cuid2';
 
 export async function buyProduct(formData: FormData) {
-  const user = await currentUser();
-  if (!user) return null;
-
   const productId = formData.get("id") || "";
   if (!productId) return null;
   const [product] = await db
@@ -21,6 +18,7 @@ export async function buyProduct(formData: FormData) {
       summary: products.summary,
       price: products.price,
       images: products.images,
+      userId: products.userId
     })
     .from(products)
     .where(
@@ -32,7 +30,7 @@ export async function buyProduct(formData: FormData) {
     })
     .from(stripeAccounts)
     .where(
-      eq(stripeAccounts.userId, user.id)
+      eq(stripeAccounts.userId, product.userId)
     );
   
     const session = await stripe.checkout.sessions.create({
