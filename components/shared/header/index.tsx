@@ -33,6 +33,9 @@ export default async function Header() {
             <Button asChild size="sm" variant="ghost">
               <Link href="/sell">Sell your product</Link>
             </Button>
+            <Button asChild size="sm" variant="ghost">
+              <Link href="/billing">Billing</Link>
+            </Button>
             <ClerkLoaded>
               <UserButton afterSignOutUrl="/" />
             </ClerkLoaded>
